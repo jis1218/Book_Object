@@ -16,3 +16,21 @@ public void enter(Audience audience) {
         }
         }
 ```
+
+# ver 2
+##### 그러므로 결합도를 낮춰 변경이 용이한 설계를 해야 한다.
+##### 자율성을 높여보자, 아래 코드들이 다 TicketSeller 클래스로 들어갔다.
+##### 그렇게 해서 Theater 클래스에서 ticketOffice를 가져오는 일이 없어졌다.
+```java
+if (audience.getBag().hasInvitation()) {
+        Ticket ticket = ticketSeller.getTicketOffice().getTicket();
+        audience.getBag().setTicket(ticket);
+        } else {
+        Ticket ticket = ticketSeller.getTicketOffice().getTicket();
+        audience.getBag().minusAmount(ticket.getFee());
+        ticketSeller.getTicketOffice().plusAmount(ticket.getFee());
+        audience.getBag().setTicket(ticket);
+        }
+```
+
+##### 결국 객체 지향의 핵심은 책임을 분산시키는 것이다. 각 객체는 자신을 스스로 책임진다.
